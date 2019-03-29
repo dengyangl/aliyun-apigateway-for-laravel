@@ -1,0 +1,24 @@
+{
+    "name": "aliyun-api-Manage/apigateway",
+    "description": "AliYun ApiGateWay Api Manage",
+    "type": "library",
+    "require": {
+        "php": ">=5.5"
+    },
+    "require-dev": {
+
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "dyl",
+            "email": "783973660@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AliYun\\ApiGateWay\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
