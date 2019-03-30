@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'accessKeyId'       =>  '',
     'accessKeySecret'   =>  '',
 
@@ -17,5 +16,4 @@ return [
     'app_owner'         =>  '',             //App拥有者的阿里云账号ID
 
     'accept'            =>  ''              //accept
-
 ];
