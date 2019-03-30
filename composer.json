@@ -1,5 +1,5 @@
 {
-    "name": "aliyun-api-Manage/apigateway",
+    "name": "aliyun-api-manage/apigateway",
     "description": "AliYun ApiGateWay Api Manage",
     "type": "library",
     "require": {
