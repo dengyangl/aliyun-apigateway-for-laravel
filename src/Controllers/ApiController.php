@@ -262,6 +262,7 @@ class ApiController extends Controller
         if ($method == 'post' || $method == 'put') {
             $request_config_array['BodyFormat'] = 'FORM';
             $location = 'body';
+            $query_location = 'body';
         }
 
         $request_config = json_encode($request_config_array);
@@ -614,6 +615,7 @@ class ApiController extends Controller
         if ($method == 'post' || $method == 'put') {
             $request_config_array['BodyFormat'] = 'FORM';
             $location = 'body';
+            $query_location = 'body';
         }
 
         $request_config = json_encode($request_config_array);
