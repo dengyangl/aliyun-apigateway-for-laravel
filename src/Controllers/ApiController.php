@@ -241,15 +241,15 @@ class ApiController extends Controller
         $is_authorization = false;
         if (!empty($data['authorization'])) $is_authorization = true;
 
-        $method = Str::lower($data['method']);
+        $method = Str::upper($data['method']);
 
 
         //request_config(前端信息项-Consumer向网关发送API请求的相关配置项)
         $location = 'query';            //get(列表/详情),delete(删除)
         $query_location = 'query';      //get(详情-一些参数是path,一些参数是query)
 
-        if ($method == 'get_detail') {  //详情
-            $method = 'get';
+        if ($method == 'GET_DETAIL') {  //详情
+            $method = 'GET';
             //$location = 'path';
         }
 
@@ -259,7 +259,7 @@ class ApiController extends Controller
             'RequestPath'       => $data['path']
         ];
 
-        if ($method == 'post' || $method == 'put') {
+        if ($method == 'POST' || $method == 'PUT') {
             $request_config_array['BodyFormat'] = 'FORM';
             $location = 'body';
             $query_location = 'body';
@@ -594,15 +594,15 @@ class ApiController extends Controller
         $is_authorization = false;
         if (!empty($data['authorization'])) $is_authorization = true;
 
-        $method = Str::lower($data['method']);
+        $method = Str::upper($data['method']);
 
 
         //request_config(前端信息项-Consumer向网关发送API请求的相关配置项)
         $location = 'query';            //get(列表/详情),delete(删除)
         $query_location = 'query';      //get(详情-一些参数是path,一些参数是query)
 
-        if ($method == 'get_detail') {  //详情
-            $method = 'get';
+        if ($method == 'GET_DETAIL') {  //详情
+            $method = 'GET';
             //$location = 'path';
         }
 
@@ -612,7 +612,7 @@ class ApiController extends Controller
             'RequestPath'       => $data['path']
         ];
 
-        if ($method == 'post' || $method == 'put') {
+        if ($method == 'POST' || $method == 'PUT') {
             $request_config_array['BodyFormat'] = 'FORM';
             $location = 'body';
             $query_location = 'body';
