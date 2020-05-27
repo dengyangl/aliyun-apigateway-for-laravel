@@ -795,9 +795,10 @@ class ApiController extends Controller
      *                                      TEST：测试
      * @param $publish_description      //发布描述
      * @param string $group_id          //分组编号
+     * @param ApiRequest $request
      * @throws \AlibabaCloud\Client\Exception\ClientException
      */
-    private function apiPublish(){
+    private function apiPublish(ApiRequest $request){
         $data = request(['api_id', 'stage_name', 'publish_description', 'group_id']);
         $api_id = $data['api_id'];
         $stage_name = $data['stage_name'];
@@ -831,11 +832,12 @@ class ApiController extends Controller
      * @param $app_id               //Long    应用(app)编号，系统生成，全局唯一(应用ID)
      * @param string $group_id      String  API分组ID，系统生成，全局唯一
      * @param string $description   String  授权说明
-     * @param int $auth_vaild_time  String  授权有效时间的截止时间，请设置格林尼治标准时间(GMT), 如果为空，即为授权永久有效。
+     * @param int $auth_vaild_time  String  授权有效时间的截止时间，请设置格林尼治标准时间(GMT), 如果为空，即为授权永久有效
+     * @param ApiRequest $request
      * @return mixed
      * @throws \AlibabaCloud\Client\Exception\ClientException
      */
-    private function apiAuthorize(){
+    private function apiAuthorize(ApiRequest $request){
         $data = request(['api_ids', 'stage_name', 'app_id', 'group_id', 'description', 'auth_vaild_time']);
         $api_ids = $data['api_ids'];
         $stage_name = $data['stage_name'];
