@@ -101,9 +101,6 @@
                 $api->post('/', 'ApiController@add');                           //添加
                 $api->put('/', 'ApiController@put');                            //修改
                 $api->delete('/', 'ApiController@del');                         //删除
-              
-                $api->post('/apiPublish', 'ApiController@apiPublish');          //添加完api接口并发布
-                $api->post('/apiAuthorize', 'ApiController@apiAuthorize');      //添加完api接口并授权
     
                 $api->put('/publish', 'ApiController@publish');                 //发布
                 $api->put('/offline', 'ApiController@offline');                 //下线
@@ -349,24 +346,6 @@
             api_id            API的Id标识            必填(多个用","隔开)
             group_id          API所在的分组编号
             
->> * 添加 完api接口并发布 /api/apiGateWay/api/apiPublish
->>> * 参数：
-   
-            api_id                  API的Id标识         必填
-            stage_name              运行环境名称        必填 RELEASE：线上; PRE：预发; TEST：测试
-            publish_description     发布描述            必填
-            group_id                API所在的分组编号
-
->> * 添加 完api接口并授权 /api/apiGateWay/api/apiAuthorize
->>> * 参数：
-            
-            api_ids                 指定要操作的API编号   必填
-            stage_name              运行环境名称          必填 RELEASE：线上; PRE：预发; TEST：测试
-            app_id                  API的Id标识           必填
-            group_id                API所在的分组编号     必填
-            description             授权说明              必填
-            auth_vaild_time         授权有效时间的截止时间，请设置格林尼治标准时间(GMT), 如果为空，即为授权永久有效。
-    
 >> * 发布API(单个/多个) /api/apiGateWay/api/publish
 >>> * 参数：
    
