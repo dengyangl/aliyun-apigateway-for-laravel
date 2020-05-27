@@ -59,13 +59,6 @@
             'prefix' => 'apiGateWay'
         ], function ($api) {
     
-            //VPC授权
-            $api->group(['prefix' => 'vpc'], function ($api) {
-                $api->get('/', 'VpcController@l');                              //列表
-                $api->post('/', 'VpcController@add');                           //添加
-                $api->delete('/', 'VpcController@del');                         //撤销
-            });
-    
             //应用
             $api->group(['prefix' => 'app'], function ($api) {
                 $api->get('/', 'AppController@l');                              //列表
@@ -75,6 +68,13 @@
     
                 $api->get('/secret/{appId}', 'AppController@getSecretByAppId'); //根据App的编号,查询app密钥
                 $api->put('/secret', 'AppController@putSecret');                //重置指定app(应用)密钥
+            });
+            
+            //VPC授权
+            $api->group(['prefix' => 'vpc'], function ($api) {
+                $api->get('/', 'VpcController@l');                              //列表
+                $api->post('/', 'VpcController@add');                           //添加
+                $api->delete('/', 'VpcController@del');                         //撤销
             });
     
             //API分组+环境变量
