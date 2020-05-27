@@ -40,7 +40,7 @@ class VpcController extends Controller
      * @description 添加授权
      * @author dyl
      * @param VpcRequest $request
-     * @param vpc_id        专用网络Id，必须是同账户下可用的专用网络的ID(要先在阿里云api网关的VPC控制台创建)
+     * @param vpc_id        专用网络Id，必须是同账户下可用的专用网络的ID(要先在阿里云api网关的VPC控制台创建，在专有网络VPC中获取：实例ID/名称)
      * @param instance_id   专用网络中的实例Id(ECS/负载均衡)(要先在阿里云购买ECS服务器)
      * @param port          实例对应的端口号
      * @param name          自定义授权名称，需要保持唯一，不能重复

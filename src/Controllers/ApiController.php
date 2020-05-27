@@ -233,6 +233,7 @@ class ApiController extends Controller
 //                         'request_config', 'service_config', 'request_parameters', 'service_parameters', 'service_parameters_map']);
 
         $data = request(['group_id', 'api_name', 'description', 'method', 'path', 'params', 'authorization', 'mock']);
+        $result_data = request(['result_type', 'result_sample', 'fail_result_sample', 'error_code_samples']);
 
         if (empty($data['group_id'])) $data['group_id'] = config('apiGateWay.api_group_id');
         if (empty($data['description'])) $data['description'] = $data['api_name'];
@@ -280,6 +281,7 @@ class ApiController extends Controller
                 'VpcId'         =>  config('apiGateWay.vpc_id'),
                 'InstanceId'    =>  config('apiGateWay.instance_id'),
                 'Port'          =>  config('apiGateWay.port'),
+                'Name'          =>  config('apiGateWay.vpc_name')
             ],
 
             'ServiceTimeout'    =>  5000,
@@ -411,6 +413,10 @@ class ApiController extends Controller
         if (!empty($request_parameters)) $options['query']['RequestParameters'] = $request_parameters;
         if (!empty($service_parameters)) $options['query']['ServiceParameters'] = $service_parameters;
         if (!empty($service_parameters_map)) $options['query']['ServiceParametersMap'] = $service_parameters_map;
+
+        if (empty($result_data['result_type'])) $options['query']['ResultType'] = config('apiGateWay.result_type');
+        //if (empty($result_data['result_sample'])) $options['query']['ResultSample'] = config('apiGateWay.result_sample');
+        if (empty($result_data['fail_result_sample'])) $options['query']['FailResultSample'] = config('apiGateWay.fail_result_sample');
 
 
         $result = $result->action('CreateApi')->options($options);
@@ -586,6 +592,7 @@ class ApiController extends Controller
      */
     public function put(ApiRequest $request){
         $data = request(['group_id', 'api_id', 'api_name', 'description', 'method', 'path', 'params', 'authorization', 'mock']);
+        $result_data = request(['result_type', 'result_sample', 'fail_result_sample', 'error_code_samples']);
 
         if (empty($data['group_id'])) $data['group_id'] = config('apiGateWay.api_group_id');
         if (empty($data['description'])) $data['description'] = $data['api_name'];
@@ -632,6 +639,7 @@ class ApiController extends Controller
                 'VpcId'         =>  config('apiGateWay.vpc_id'),
                 'InstanceId'    =>  config('apiGateWay.instance_id'),
                 'Port'          =>  config('apiGateWay.port'),
+                'Name'          =>  config('apiGateWay.vpc_name')
             ],
             'ServiceTimeout'    =>  5000,
             'ServicePath'       =>  $data['path']
@@ -759,6 +767,10 @@ class ApiController extends Controller
         if (!empty($service_parameters)) $options['query']['ServiceParameters'] = $service_parameters;
         if (!empty($service_parameters_map)) $options['query']['ServiceParametersMap'] = $service_parameters_map;
 
+        if (empty($result_data['result_type'])) $options['query']['ResultType'] = config('apiGateWay.result_type');
+        //if (empty($result_data['result_sample'])) $options['query']['ResultSample'] = config('apiGateWay.result_sample');
+        if (empty($result_data['fail_result_sample'])) $options['query']['FailResultSample'] = config('apiGateWay.fail_result_sample');
+
         $result = $result->action('ModifyApi')->options($options);
 
         $handle_result = $this->handleException($result);
@@ -782,16 +794,21 @@ class ApiController extends Controller
      *                                      PRE：预发
      *                                      TEST：测试
      * @param $publish_description      //发布描述
-     * @param string $group_id          分组编号
+     * @param string $group_id          //分组编号
      * @throws \AlibabaCloud\Client\Exception\ClientException
      */
-    private function apiPublish($ApiId, $stage_name, $publish_description, $group_id = ''){
+    private function apiPublish(){
+        $data = request(['api_id', 'stage_name', 'publish_description', 'group_id']);
+        $api_id = $data['api_id'];
+        $stage_name = $data['stage_name'];
+        $publish_description = $data['publish_description'];
+        $group_id = isset($data['group_id']) && !empty($data['group_id']) ? $data['group_id'] : '';
 
         $result = $this->getAlibabaCloudRpcRequest();
 
         $options = [
             'query' => [
-                'ApiId'         =>  $ApiId,
+                'ApiId'         =>  $api_id,
                 'StageName'     =>  $stage_name,
                 'Description'   =>  $publish_description
             ]
@@ -818,7 +835,14 @@ class ApiController extends Controller
      * @return mixed
      * @throws \AlibabaCloud\Client\Exception\ClientException
      */
-    private function apiAuthorize($api_ids, $stage_name, $app_id, $group_id = '', $description = '', $auth_vaild_time = 0){
+    private function apiAuthorize(){
+        $data = request(['api_ids', 'stage_name', 'app_id', 'group_id', 'description', 'auth_vaild_time']);
+        $api_ids = $data['api_ids'];
+        $stage_name = $data['stage_name'];
+        $app_id = $data['app_id'];
+        $group_id = $data['group_id'];
+        $description = $data['description'];
+        $auth_vaild_time = isset($data['auth_vaild_time']) && !empty($data['auth_vaild_time']) ? $data['auth_vaild_time'] : 0;
 
         $result = $this->getAlibabaCloudRpcRequest();
 

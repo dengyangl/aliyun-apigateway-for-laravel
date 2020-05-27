@@ -91,6 +91,26 @@ class ApiRequest extends FormRequest
                 $is_authorize = request('is_authorize');
                 if (!empty($is_authorize)) $validate_arr['app_id'] = 'required';
             }
+
+            //添加并发布
+            if ($action == 'apiPublish') {
+                $validate_arr = [
+                    'api_id'                =>  'required',
+                    'stage_name'            =>  'required',
+                    'publish_description'   =>  'required'
+                ];
+            }
+
+            //添加并授权
+            if ($action == 'apiAuthorize') {
+                $validate_arr = [
+                    'api_ids'           =>  'required',
+                    'stage_name'        =>  'required',
+                    'app_id'            =>  'required',
+                    'group_id'          =>  'required',
+                    'description'       =>  'required'
+                ];
+            }
         }
 
         if ($method == 'PUT') {

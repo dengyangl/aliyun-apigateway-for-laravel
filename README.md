@@ -70,7 +70,7 @@
                 $api->put('/secret', 'AppController@putSecret');                //重置指定app(应用)密钥
             });
             
-            //VPC授权
+            //(专有网络)VPC授权
             $api->group(['prefix' => 'vpc'], function ($api) {
                 $api->get('/', 'VpcController@l');                              //列表
                 $api->post('/', 'VpcController@add');                           //添加
@@ -101,6 +101,9 @@
                 $api->post('/', 'ApiController@add');                           //添加
                 $api->put('/', 'ApiController@put');                            //修改
                 $api->delete('/', 'ApiController@del');                         //删除
+              
+                $api->post('/apiPublish', 'ApiController@apiPublish');          //添加完api接口并发布
+                $api->post('/apiAuthorize', 'ApiController@apiAuthorize');      //添加完api接口并授权
     
                 $api->put('/publish', 'ApiController@publish');                 //发布
                 $api->put('/offline', 'ApiController@offline');                 //下线
@@ -246,7 +249,7 @@
 
 
 > * 四、API
->> * 添加：可顺便发布+授权
+>> * 添加：可顺便发布+授权 /api/apiGateWay/api
 >>> * 参数：
 
             group_id              指定的分组编号                 必填
@@ -285,7 +288,7 @@
             is_authorize          是否需要授权                  不为空-则授权
             app_id                应用ID                      is_authorize不为空-则必填
 
->> * 修改：可顺便发布
+>> * 修改：可顺便发布 /api/apiGateWay/api
 >>> * 参数：
 
             api_id                API的Id标识                  必填       
@@ -323,7 +326,7 @@
       
             publish_description   是否需要发布                  不为空-则发布
 
->> * 查询定义中的API列表/查询已发布API列表
+>> * 查询定义中的API列表/查询已发布API列表 /api/apiGateWay/api
 >>> * 参数：
       
             group_id          指定的分组编号
@@ -334,19 +337,37 @@
             page_number       指定要查询的页码
             action_type       操作类型            
 
->> * 查询API定义(详情)
+>> * 查询API定义(详情) /api/apiGateWay/api/apiId?group_id=
 >>> * 参数：
      
             apiId             API的Id标识            必填
             group_id          API所在的分组编号
     
->> * 删除API(单个/多个)
+>> * 删除API(单个/多个) /api/apiGateWay/api
 >>> * 参数：
    
             api_id            API的Id标识            必填(多个用","隔开)
             group_id          API所在的分组编号
+            
+>> * 添加 完api接口并发布 /api/apiGateWay/api/apiPublish
+>>> * 参数：
+   
+            api_id                  API的Id标识         必填
+            stage_name              运行环境名称        必填 RELEASE：线上; PRE：预发; TEST：测试
+            publish_description     发布描述            必填
+            group_id                API所在的分组编号
+
+>> * 添加 完api接口并授权 /api/apiGateWay/api/apiAuthorize
+>>> * 参数：
+            
+            api_ids                 指定要操作的API编号   必填
+            stage_name              运行环境名称          必填 RELEASE：线上; PRE：预发; TEST：测试
+            app_id                  API的Id标识           必填
+            group_id                API所在的分组编号     必填
+            description             授权说明              必填
+            auth_vaild_time         授权有效时间的截止时间，请设置格林尼治标准时间(GMT), 如果为空，即为授权永久有效。
     
->> * 发布API(单个/多个)
+>> * 发布API(单个/多个) /api/apiGateWay/api/publish
 >>> * 参数：
    
             api_id            API的Id标识            必填(多个用","隔开)
@@ -354,7 +375,7 @@
             stage_name        运行环境名称            必填
             description       本次发布备注说明         必填
     
->> * 下线API(单个/多个)
+>> * 下线API(单个/多个) /api/apiGateWay/api/offline
 >>> * 参数：
    
             api_id            API的Id标识            必填(多个用","隔开)
